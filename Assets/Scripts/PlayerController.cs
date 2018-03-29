@@ -25,7 +25,8 @@ public class PlayerController : MonoBehaviour
 	public GameObject sword;
 	
 	//INTERNALS
-
+	public bool alive;
+	
 	private bool jumping;
 	private bool armed;
 
@@ -45,9 +46,14 @@ public class PlayerController : MonoBehaviour
 	void Update()
 	{
 
-		if (Input.GetButtonDown("Gamepad_Start"))
+		if (Input.GetButtonDown("Gamepad_Start") || Input.GetKeyDown(KeyCode.Escape))
 		{
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		}
+
+		if (!alive)
+		{
+			return;
 		}
 		
 		CheckInputs();
@@ -114,11 +120,13 @@ public class PlayerController : MonoBehaviour
 		rb.velocity += Vector3.up * jumpForce;
 	}
 
+	//throw sword
 	void Throw()
 	{
 		
 	}
 
+	//Graw sword
 	void Grab()
 	{
 		
@@ -126,6 +134,12 @@ public class PlayerController : MonoBehaviour
 
 	public void Die()
 	{
+		
+		alive = false;
+
+		x = 0;
+		z = 0;
+		
 		manager.Die();
 	}
 
@@ -141,6 +155,9 @@ public class PlayerController : MonoBehaviour
 		{
 				Destroy(_arrow);
 		}
+
+		alive = true;
+		
 		//anim.SetTrigger("Idle");
 	}
 
@@ -152,6 +169,7 @@ public class PlayerController : MonoBehaviour
 			Destroy(other.collider.gameObject.GetComponent<Rigidbody>());
 			other.collider.gameObject.transform.SetParent(transform);
 			arrows.Add(other.collider.gameObject);
+			
 			//attacher la lance au joueur et appliquer un ragdoll ?
 			
 			Die();
