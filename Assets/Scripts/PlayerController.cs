@@ -75,15 +75,15 @@ public class PlayerController : MonoBehaviour
 
 	void CheckInputs()
 	{
-		x = Input.GetAxis("Gamepad_Left_X");
-		z = -Input.GetAxis("Gamepad_Left_Y");
+		x = Input.GetAxis("Gamepad_Left_X") + Input.GetAxis("Horizontal");
+		z = -Input.GetAxis("Gamepad_Left_Y") + Input.GetAxis("Vertical");
 
-		if (Input.GetButtonDown("Gamepad_A") && !jumping)
+		if ((Input.GetButtonDown("Gamepad_A") || Input.GetKeyDown(KeyCode.Space)) && !jumping)
 		{
 			Jump();
 		}
 
-		if (Input.GetButtonDown("Gamepad_X"))
+		if (Input.GetButtonDown("Gamepad_X") || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
 		{
 			Throw();
 		}
