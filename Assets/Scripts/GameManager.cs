@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-	private Vector3 lastCheckpoint;
+	public Vector3 lastCheckpoint;
 
 	public PlayerController player;
 	
@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour
 
 		player.transform.position = lastCheckpoint;
 		player.Respawn();
+		
+		yield return new WaitForSecondsRealtime(.5f);
 
 		while (_i > 0)
 		{

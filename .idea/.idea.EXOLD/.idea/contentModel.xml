@@ -302,7 +302,10 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="CameraFollow.cs" t="Include" />
+          <e p="Dalle.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
+          <e p="Lance.cs" t="Include" />
+          <e p="Pic.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />
         </e>
         <e p="ShaderForge" t="Include">

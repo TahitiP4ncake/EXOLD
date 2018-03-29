@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33633690317578930}
   - component: {fileID: 65562743772946488}
   - component: {fileID: 23471448136544124}
+  - component: {fileID: 114503817340800504}
   m_Layer: 0
   m_Name: Lance
   m_TagString: Untagged
@@ -67,7 +68,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1101553630949516}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.41, z: 0}
+  m_LocalPosition: {x: 3, y: 2, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4456633504064240}
@@ -168,6 +169,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114503817340800504
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1101553630949516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1e40512c15e6e444b6db58ae0ec9dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lance: {fileID: 1680887945470594, guid: 292c544c9117fc84182f20783e4f3d77, type: 2}
+  lanceur: {fileID: 4456633504064240}
+  lanceSpeed: 50
 --- !u!136 &136731546790569888
 CapsuleCollider:
   m_ObjectHideFlags: 1
