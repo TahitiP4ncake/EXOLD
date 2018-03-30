@@ -302,6 +302,7 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="CameraFollow.cs" t="Include" />
+          <e p="Checkpoint.cs" t="Include" />
           <e p="Dalle.cs" t="Include" />
           <e p="Fleche.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
