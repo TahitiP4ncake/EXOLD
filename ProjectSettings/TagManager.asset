@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - Lance
+  - Corde
+  - Spikes
   layers:
   - Default
   - TransparentFX

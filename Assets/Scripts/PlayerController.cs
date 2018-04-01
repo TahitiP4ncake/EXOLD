@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour
 	
 	//OBJECT
 
-	public GameObject sword;
 	
 	//INTERNALS
 	public bool alive;
@@ -42,6 +41,12 @@ public class PlayerController : MonoBehaviour
 	
 	//MANAGER
 	public GameManager manager;
+	
+	//THROWING SWORD
+	[Space] public GameObject hand;
+
+	public GameObject sword;
+	public float throwingSpeed;
 
 	void Update()
 	{
@@ -171,6 +176,12 @@ public class PlayerController : MonoBehaviour
 			arrows.Add(other.collider.gameObject);
 			
 			//attacher la lance au joueur et appliquer un ragdoll ?
+			
+			Die();
+		}
+		else if (other.collider.tag == "Spikes")
+		{
+			
 			
 			Die();
 		}
