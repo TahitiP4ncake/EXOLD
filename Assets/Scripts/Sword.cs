@@ -16,6 +16,8 @@ public class Sword : MonoBehaviour
 		rb.useGravity = true;
 		col.enabled = true;
 		rb.velocity = _direction;
+		transform.LookAt(transform.position + _direction);
+		rb.AddTorque(transform.right * _direction.magnitude, ForceMode.VelocityChange);
 	}
 
 	public void Grab()
@@ -32,6 +34,8 @@ public class Sword : MonoBehaviour
 
 	private void OnCollisionEnter(Collision other)
 	{
+		
+		
 		if (other.collider.tag == "Wall")
 		{
 			HitWall();

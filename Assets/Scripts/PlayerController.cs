@@ -49,6 +49,8 @@ public class PlayerController : MonoBehaviour
 	public Sword sword;
 	public float throwingSpeed;
 
+	private Vector3 throwingDirection;
+
 	void Update()
 	{
 
@@ -132,10 +134,31 @@ public class PlayerController : MonoBehaviour
 	//throw sword
 	void Throw()
 	{
+		
+		
+		
 		swordObject.transform.parent = null;
 		armed = false;
+
+		if (direction.y <= 45 && direction.y > -45)
+		{
+			throwingDirection = Vector3.forward;
+		}
+		else if (direction.y <= -45 && direction.y > -135)
+		{
+			throwingDirection = Vector3.left;
+		}
+		else if (direction.y <= -135 && direction.y > -225)
+		{
+			throwingDirection = Vector3.back;
+		}
+		else
+		{
+			throwingDirection = Vector3.right;
+		}
 		
-		sword.Throw(transform.forward*throwingSpeed);
+		
+		sword.Throw(throwingDirection*throwingSpeed);
 	}
 
 	//Graw sword
@@ -220,14 +243,14 @@ public class PlayerController : MonoBehaviour
 			
 			Die();
 		}
-		else if (other.collider.tag == "Sword")
-		{
-			if (swordObject == null)
-			{
-				swordObject = other.transform.parent.transform.parent.gameObject;
-			}
-			Grab(swordObject);
-		}
+//		else if (other.collider.tag == "Sword")
+//		{
+//			if (swordObject == null)
+//			{
+//				swordObject = other.transform.parent.transform.parent.gameObject;
+//			}
+//			Grab(swordObject);
+//		}
 	}
 
 	private void OnCollisionStay(Collision other)
