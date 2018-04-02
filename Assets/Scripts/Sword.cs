@@ -10,9 +10,19 @@ public class Sword : MonoBehaviour
 
 	public Rigidbody rb;
 
-	public void Throw()
+	public void Throw(Vector3 _direction)
 	{
-		
+		rb.isKinematic = false;
+		rb.useGravity = true;
+		col.enabled = true;
+		rb.velocity = _direction;
+	}
+
+	public void Grab()
+	{
+		rb.isKinematic = true;
+		rb.useGravity = false;
+		col.enabled = false;
 	}
 
 	public void HitWall()

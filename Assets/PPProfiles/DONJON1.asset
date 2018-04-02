@@ -42,7 +42,7 @@ MonoBehaviour:
   ambientOcclusion:
     m_Enabled: 1
     m_Settings:
-      intensity: 4
+      intensity: 1
       radius: 0.3
       sampleCount: 10
       downsampling: 1
@@ -100,7 +100,7 @@ MonoBehaviour:
     m_Enabled: 1
     m_Settings:
       bloom:
-        intensity: 58.23
+        intensity: 0.5
         threshold: 1.1
         softKnee: 0.5
         radius: 4
@@ -120,10 +120,10 @@ MonoBehaviour:
         neutralWhiteLevel: 5.3
         neutralWhiteClip: 10
       basic:
-        postExposure: 1.8
-        temperature: 77
-        tint: -57
-        hueShift: -180
+        postExposure: 0
+        temperature: -10
+        tint: -9
+        hueShift: 0
         saturation: 1
         contrast: 1
       channelMixer:
@@ -134,9 +134,9 @@ MonoBehaviour:
       colorWheels:
         mode: 1
         log:
-          slope: {r: 1, g: 1, b: 1, a: 0}
-          power: {r: 1, g: 1, b: 1, a: 0}
-          offset: {r: 1, g: 1, b: 1, a: 0}
+          slope: {r: 1, g: 0.86898565, b: 0.8418182, a: 0}
+          power: {r: 1, g: 0.97763187, b: 0.94898826, a: 0}
+          offset: {r: 0.9085181, g: 1, b: 0.68080044, a: 0}
         linear:
           lift: {r: 0, g: 0, b: 0, a: 0}
           gamma: {r: 0, g: 0, b: 0, a: 0}
@@ -278,7 +278,7 @@ MonoBehaviour:
   userLut:
     m_Enabled: 1
     m_Settings:
-      lut: {fileID: 2800000, guid: 407ee40e5cd542847884d5099a0a2ec7, type: 3}
+      lut: {fileID: 2800000, guid: 58b0f352f985f1442b054fd10c1ba18b, type: 3}
       contribution: 1
   chromaticAberration:
     m_Enabled: 0

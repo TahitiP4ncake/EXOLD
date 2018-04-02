@@ -45,7 +45,8 @@ public class PlayerController : MonoBehaviour
 	//THROWING SWORD
 	[Space] public GameObject hand;
 
-	public GameObject sword;
+	public GameObject swordObject;
+	public Sword sword;
 	public float throwingSpeed;
 
 	void Update()
@@ -98,7 +99,10 @@ public class PlayerController : MonoBehaviour
 
 		if (Input.GetButtonDown("Gamepad_X") || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
 		{
-			Throw();
+			if (armed)
+			{
+				Throw();
+			}
 		}
 	}
 
@@ -128,13 +132,44 @@ public class PlayerController : MonoBehaviour
 	//throw sword
 	void Throw()
 	{
+		swordObject.transform.parent = null;
+		armed = false;
 		
+		sword.Throw(transform.forward*throwingSpeed);
 	}
 
 	//Graw sword
-	void Grab()
+	void Grab(GameObject _sword)
 	{
+		if (sword == null)
+		{
+			sword = _sword.GetComponent<Sword>();
+		}
+
+		sword.Grab();
+
+		armed = true;
+		StartCoroutine(LerpSword());
+	}
+
+	IEnumerator LerpSword()
+	{
+		float _i = 0;
+
+		Vector3 _position = swordObject.transform.position;
+		Quaternion _rotation = swordObject.transform.rotation;
 		
+		while (_i < 1)
+		{
+			swordObject.transform.position = Vector3.Lerp(_position, hand.transform.position, _i);
+			swordObject.transform.rotation = Quaternion.Slerp(_rotation, hand.transform.rotation, _i);
+			_i += Time.deltaTime*10;
+			yield return null;
+		}
+		
+		swordObject.transform.SetParent(hand.transform);
+
+		armed = true;
 	}
 
 	public void Die()
@@ -185,6 +220,14 @@ public class PlayerController : MonoBehaviour
 			
 			Die();
 		}
+		else if (other.collider.tag == "Sword")
+		{
+			if (swordObject == null)
+			{
+				swordObject = other.transform.parent.transform.parent.gameObject;
+			}
+			Grab(swordObject);
+		}
 	}
 
 	private void OnCollisionStay(Collision other)
@@ -205,7 +248,12 @@ public class PlayerController : MonoBehaviour
 	{
 		if (other.tag == "Sword")
 		{
-			Grab();
+			if (swordObject == null)
+			{
+				swordObject = other.transform.parent.transform.parent.gameObject;
+				
+			}
+			Grab(swordObject);
 		}
 
 		else if (other.tag == "Spike")

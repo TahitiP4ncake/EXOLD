@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 136390218341019142}
   - component: {fileID: 23707718444362656}
   - component: {fileID: 54550011738185452}
+  - component: {fileID: 114918665508376268}
   m_Layer: 9
   m_Name: Fleche
   m_TagString: Lance
@@ -99,6 +100,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 2
+--- !u!114 &114918665508376268
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1680887945470594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1911a1461913c5c45b8a2925cf0e1797, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 54550011738185452}
 --- !u!136 &136390218341019142
 CapsuleCollider:
   m_ObjectHideFlags: 1

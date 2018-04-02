@@ -8,6 +8,8 @@ TagManager:
   - Lance
   - Corde
   - Spikes
+  - Sword
+  - Wall
   layers:
   - Default
   - TransparentFX

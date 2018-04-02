@@ -11,7 +11,11 @@ public class Fleche : MonoBehaviour
 	{
 		if (other.collider.tag == "Wall")
 		{
-			Destroy(rb);
+			Destroy(gameObject);
+		}
+		else if (other.collider.tag == "Sword")
+		{
+			Destroy(gameObject);
 		}
 	}
 }

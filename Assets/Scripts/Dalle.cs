@@ -12,7 +12,15 @@ public class Dalle : MonoBehaviour
 	public float cooldown;
 
 	public Animator anim;
-	
+
+	private Color _color;
+	public Renderer rend;
+
+	private void Start()
+	{
+		_color = GetComponent<Renderer>().material.color;
+	}
+
 	void OnTriggerEnter(Collider other)
 	{
 		if (!pushed)
@@ -20,6 +28,7 @@ public class Dalle : MonoBehaviour
 			pushed = true;
 			//anim.SetTrigger("Push");
 			print("DALLE PUSHED");
+			rend.material.color = Color.white;
 			lance.Shoot();
 		}
 	}
@@ -34,7 +43,7 @@ public class Dalle : MonoBehaviour
 		//anim.SetTrigger("Up");
 		
 		print("DALLE UP");
-		
+		rend.material.color = _color;
 		pushed = false;
 	}
 }

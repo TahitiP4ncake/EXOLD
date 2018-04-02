@@ -71,6 +71,7 @@ public class Corde : MonoBehaviour
 		//triggers trap that may not kill the player
 		
 		cut = true;
-		rope.enabled = false;
+		Destroy(gameObject);
+		//rope.enabled = false;
 	}
 }
