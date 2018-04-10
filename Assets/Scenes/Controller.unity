@@ -1889,10 +1889,6 @@ Prefab:
       propertyPath: m_Name
       value: Lance (4)
       objectReference: {fileID: 0}
-    - target: {fileID: 4809247814273702, guid: 49c0341bf6e087c4585ee6e300003e62, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90.00001
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 49c0341bf6e087c4585ee6e300003e62, type: 2}
   m_IsPrefabParent: 0
