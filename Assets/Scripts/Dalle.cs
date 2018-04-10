@@ -28,7 +28,7 @@ public class Dalle : MonoBehaviour
 			if (other.tag != "Sword")
 			{
 				pushed = true;
-				//anim.SetTrigger("Push");
+				anim.SetTrigger("Push");
 				print("DALLE PUSHED");
 				rend.material.color = Color.white;
 				lance.Shoot(cooldown);
@@ -43,7 +43,7 @@ public class Dalle : MonoBehaviour
 
 	void GetUp()
 	{
-		//anim.SetTrigger("Up");
+		anim.SetTrigger("Up");
 		
 		print("DALLE UP");
 		rend.material.color = _color;

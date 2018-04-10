@@ -6,6 +6,8 @@ public class Fleche : MonoBehaviour
 {
 
 	public Rigidbody rb;
+
+
 	
 	private void OnCollisionEnter(Collision other)
 	{

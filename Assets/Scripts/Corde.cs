@@ -16,6 +16,8 @@ public class Corde : MonoBehaviour
 
 	public Renderer rend;
 
+
+	public Animator anim;
 //	private void Start()
 //	{
 //		positions = new Vector3[points.Length];
@@ -44,10 +46,7 @@ public class Corde : MonoBehaviour
 //	}
 
 	private void OnTriggerEnter(Collider other)
-	{
-
-		print("touched");
-		
+	{		
 		if (other.GetComponent<Collider>().tag == "Player")
 		{			
 			KillPlayer(other.GetComponent<Collider>().gameObject);
@@ -58,13 +57,13 @@ public class Corde : MonoBehaviour
 			col.enabled = false;	
 			Trap();
 		}
+
 		
 	}
 
 	void KillPlayer(GameObject _player)
 	{
 		//trigers trap that kills the player
-		print("TOUCHé");
 		_player.GetComponentInParent<PlayerController>().Die();
 	}
 	
@@ -72,6 +71,8 @@ public class Corde : MonoBehaviour
 	{
 		//triggers trap that may not kill the player
 		FindObjectOfType<GameManager>().CutCorde(this);
+		anim.SetTrigger("Cut");
+		
 		cut = true;
 		rend.enabled = false;
 		
@@ -81,6 +82,7 @@ public class Corde : MonoBehaviour
 
 	public void ResetTrap()
 	{
+		anim.SetTrigger("On");
 		cut = false;
 		rend.enabled = true;
 		col.enabled = true;
