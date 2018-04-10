@@ -31,7 +31,7 @@ public class Dalle : MonoBehaviour
 				//anim.SetTrigger("Push");
 				print("DALLE PUSHED");
 				rend.material.color = Color.white;
-				lance.Shoot();
+				lance.Shoot(cooldown);
 			}
 		}
 	}
