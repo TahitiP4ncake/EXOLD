@@ -250,7 +250,7 @@ public class PlayerController : MonoBehaviour
 		if(other.collider.tag == "Lance")
 		{
 			Destroy(other.collider.gameObject.GetComponentInParent<Rigidbody>());
-			other.collider.gameObject.transform.parent.transform.SetParent(transform);
+			other.collider.transform.parent.SetParent(transform);
 			arrows.Add(other.collider.transform.parent.gameObject);
 			
 			//attacher la lance au joueur et appliquer un ragdoll ?
@@ -259,8 +259,6 @@ public class PlayerController : MonoBehaviour
 		}
 		else if (other.collider.tag == "Spikes")
 		{
-			
-			
 			Die();
 		}
 		
@@ -307,6 +305,10 @@ public class PlayerController : MonoBehaviour
 		else if (other.tag == "Gold")
 		{
 			
+		}
+		else if (other.tag == "Spikes")
+		{
+			Die();
 		}
 		
 	}
