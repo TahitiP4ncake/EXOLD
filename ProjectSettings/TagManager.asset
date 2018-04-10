@@ -10,6 +10,7 @@ TagManager:
   - Spikes
   - Sword
   - Wall
+  - SwordCollider
   layers:
   - Default
   - TransparentFX

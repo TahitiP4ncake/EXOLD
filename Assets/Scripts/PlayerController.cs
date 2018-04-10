@@ -202,6 +202,8 @@ public class PlayerController : MonoBehaviour
 
 		x = 0;
 		z = 0;
+
+		
 		
 		manager.Die();
 	}
@@ -219,19 +221,37 @@ public class PlayerController : MonoBehaviour
 				Destroy(_arrow);
 		}
 
+		if (swordObject != null)
+		{
+			RespawnSword();
+		}
+
 		alive = true;
 		
 		//anim.SetTrigger("Idle");
 	}
 
+	void RespawnSword()
+	{
+		sword.Grab();
+
+		swordObject.transform.position = hand.transform.position;
+		swordObject.transform.rotation = hand.transform.rotation;
+		
+		swordObject.transform.SetParent(hand.transform);
+
+		
+		armed = true;
+	}
+	
 	void OnCollisionEnter(Collision other)
 	{
 	
 		if(other.collider.tag == "Lance")
 		{
-			Destroy(other.collider.gameObject.GetComponent<Rigidbody>());
-			other.collider.gameObject.transform.SetParent(transform);
-			arrows.Add(other.collider.gameObject);
+			Destroy(other.collider.gameObject.GetComponentInParent<Rigidbody>());
+			other.collider.gameObject.transform.parent.transform.SetParent(transform);
+			arrows.Add(other.collider.transform.parent.gameObject);
 			
 			//attacher la lance au joueur et appliquer un ragdoll ?
 			
@@ -243,6 +263,7 @@ public class PlayerController : MonoBehaviour
 			
 			Die();
 		}
+		
 //		else if (other.collider.tag == "Sword")
 //		{
 //			if (swordObject == null)
@@ -282,6 +303,10 @@ public class PlayerController : MonoBehaviour
 		else if (other.tag == "Spike")
 		{
 			Die();
+		}
+		else if (other.tag == "Gold")
+		{
+			
 		}
 		
 	}

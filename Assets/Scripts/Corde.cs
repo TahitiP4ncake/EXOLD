@@ -5,14 +5,16 @@ using UnityEngine;
 public class Corde : MonoBehaviour
 {
 
-	public Transform[] points;
+	//public Transform[] points;
 
-	private Vector3[] positions;
-	public LineRenderer rope;
+	//private Vector3[] positions;
+	//public LineRenderer rope;
 
 	public bool cut;
 
 	public Collider col;
+
+	public Renderer rend;
 
 //	private void Start()
 //	{
@@ -69,9 +71,19 @@ public class Corde : MonoBehaviour
 	void Trap()
 	{
 		//triggers trap that may not kill the player
-		
+		FindObjectOfType<GameManager>().CutCorde(this);
 		cut = true;
-		Destroy(gameObject);
+		rend.enabled = false;
+		
+		//Destroy(gameObject);
 		//rope.enabled = false;
+	}
+
+	public void ResetTrap()
+	{
+		cut = false;
+		rend.enabled = true;
+		col.enabled = true;
+
 	}
 }

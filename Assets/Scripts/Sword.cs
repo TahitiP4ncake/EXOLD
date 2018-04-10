@@ -22,6 +22,7 @@ public class Sword : MonoBehaviour
 
 	public void Grab()
 	{
+		grabZone.enabled = false;
 		rb.isKinematic = true;
 		rb.useGravity = false;
 		col.enabled = false;
@@ -29,7 +30,9 @@ public class Sword : MonoBehaviour
 
 	public void HitWall()
 	{
-		
+		rb.isKinematic = true;
+
+		grabZone.enabled = true;
 	}
 
 	private void OnCollisionEnter(Collision other)
@@ -42,7 +45,7 @@ public class Sword : MonoBehaviour
 		}
 		else if (other.collider.tag == "Ground")
 		{
-			
+			grabZone.enabled = true;
 		}
 	}
 }

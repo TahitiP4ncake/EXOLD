@@ -7,6 +7,9 @@ public class Checkpoint : MonoBehaviour {
 	
 	private void OnTriggerEnter(Collider other)
 	{
-		FindObjectOfType<GameManager>().lastCheckpoint = transform.position;
+		if (other.tag == "Player")
+		{
+			FindObjectOfType<GameManager>().SetCheckpoint(transform.position);
+		}
 	}
 }

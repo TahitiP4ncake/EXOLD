@@ -308,6 +308,7 @@
           <e p="Dalle.cs" t="Include" />
           <e p="Fleche.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
+          <e p="Gold.cs" t="Include" />
           <e p="Lance.cs" t="Include" />
           <e p="Pic.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />
