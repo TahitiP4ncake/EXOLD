@@ -30,6 +30,8 @@ public class Sword : MonoBehaviour
 
 	public void HitWall()
 	{
+		rb.isKinematic = true;
+
 		grabZone.enabled = true;
 	}
 

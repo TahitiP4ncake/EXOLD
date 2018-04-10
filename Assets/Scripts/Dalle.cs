@@ -25,11 +25,14 @@ public class Dalle : MonoBehaviour
 	{
 		if (!pushed)
 		{
-			pushed = true;
-			//anim.SetTrigger("Push");
-			print("DALLE PUSHED");
-			rend.material.color = Color.white;
-			lance.Shoot();
+			if (other.tag != "Sword")
+			{
+				pushed = true;
+				//anim.SetTrigger("Push");
+				print("DALLE PUSHED");
+				rend.material.color = Color.white;
+				lance.Shoot();
+			}
 		}
 	}
 

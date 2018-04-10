@@ -249,9 +249,9 @@ public class PlayerController : MonoBehaviour
 	
 		if(other.collider.tag == "Lance")
 		{
-			Destroy(other.collider.gameObject.GetComponent<Rigidbody>());
-			other.collider.gameObject.transform.SetParent(transform);
-			arrows.Add(other.collider.gameObject);
+			Destroy(other.collider.gameObject.GetComponentInParent<Rigidbody>());
+			other.collider.gameObject.transform.parent.transform.SetParent(transform);
+			arrows.Add(other.collider.transform.parent.gameObject);
 			
 			//attacher la lance au joueur et appliquer un ragdoll ?
 			
