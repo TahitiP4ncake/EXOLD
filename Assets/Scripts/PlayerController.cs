@@ -22,10 +22,10 @@ public class PlayerController : MonoBehaviour
 	
 	//OBJECT
 
-	public GameObject sword;
 	
 	//INTERNALS
-
+	public bool alive;
+	
 	private bool jumping;
 	private bool armed;
 
@@ -36,16 +36,32 @@ public class PlayerController : MonoBehaviour
 
 	private float x;
 	private float z;
+
+	public List<GameObject> arrows;
 	
 	//MANAGER
 	public GameManager manager;
+	
+	//THROWING SWORD
+	[Space] public GameObject hand;
+
+	public GameObject swordObject;
+	public Sword sword;
+	public float throwingSpeed;
+
+	private Vector3 throwingDirection;
 
 	void Update()
 	{
 
-		if (Input.GetButtonDown("Gamepad_Start"))
+		if (Input.GetButtonDown("Gamepad_Start") || Input.GetKeyDown(KeyCode.Escape))
 		{
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		}
+
+		if (!alive)
+		{
+			return;
 		}
 		
 		CheckInputs();
@@ -85,7 +101,10 @@ public class PlayerController : MonoBehaviour
 
 		if (Input.GetButtonDown("Gamepad_X") || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
 		{
-			Throw();
+			if (armed)
+			{
+				Throw();
+			}
 		}
 	}
 
@@ -112,18 +131,78 @@ public class PlayerController : MonoBehaviour
 		rb.velocity += Vector3.up * jumpForce;
 	}
 
+	//throw sword
 	void Throw()
 	{
 		
+		
+		
+		swordObject.transform.parent = null;
+		armed = false;
+
+		if (direction.y <= 45 && direction.y > -45)
+		{
+			throwingDirection = Vector3.forward;
+		}
+		else if (direction.y <= -45 && direction.y > -135)
+		{
+			throwingDirection = Vector3.left;
+		}
+		else if (direction.y <= -135 && direction.y > -225)
+		{
+			throwingDirection = Vector3.back;
+		}
+		else
+		{
+			throwingDirection = Vector3.right;
+		}
+		
+		
+		sword.Throw(throwingDirection*throwingSpeed);
 	}
 
-	void Grab()
+	//Graw sword
+	void Grab(GameObject _sword)
+	{
+		if (sword == null)
+		{
+			sword = _sword.GetComponent<Sword>();
+		}
+
+		sword.Grab();
+
+		armed = true;
+		StartCoroutine(LerpSword());
+	}
+
+	IEnumerator LerpSword()
+	{
+		float _i = 0;
+
+		Vector3 _position = swordObject.transform.position;
+		Quaternion _rotation = swordObject.transform.rotation;
+		
+		while (_i < 1)
+		{
+			swordObject.transform.position = Vector3.Lerp(_position, hand.transform.position, _i);
+			swordObject.transform.rotation = Quaternion.Slerp(_rotation, hand.transform.rotation, _i);
+			_i += Time.deltaTime*10;
+			yield return null;
+		}
+		
+		swordObject.transform.SetParent(hand.transform);
+
+		armed = true;
+	}
+
+	public void Die()
 	{
 		
-	}
+		alive = false;
 
-	void Die()
-	{
+		x = 0;
+		z = 0;
+		
 		manager.Die();
 	}
 
@@ -135,23 +214,75 @@ public class PlayerController : MonoBehaviour
 
 	public void Respawn()
 	{
-		anim.SetTrigger("Idle");
+		foreach (GameObject _arrow in arrows)
+		{
+				Destroy(_arrow);
+		}
+
+		alive = true;
+		
+		//anim.SetTrigger("Idle");
 	}
 
 	void OnCollisionEnter(Collision other)
 	{
-		if (other.collider.tag == "Ground")
+	
+		if(other.collider.tag == "Lance")
+		{
+			Destroy(other.collider.gameObject.GetComponent<Rigidbody>());
+			other.collider.gameObject.transform.SetParent(transform);
+			arrows.Add(other.collider.gameObject);
+			
+			//attacher la lance au joueur et appliquer un ragdoll ?
+			
+			Die();
+		}
+		else if (other.collider.tag == "Spikes")
+		{
+			
+			
+			Die();
+		}
+//		else if (other.collider.tag == "Sword")
+//		{
+//			if (swordObject == null)
+//			{
+//				swordObject = other.transform.parent.transform.parent.gameObject;
+//			}
+//			Grab(swordObject);
+//		}
+	}
+
+	private void OnCollisionStay(Collision other)
+	{
+		if (other.collider.tag == "Ground" && jumping)
 		{
 			jumping = false;
 			gravity = 0;
 		}
 	}
 
+	private void OnCollisionExit(Collision other)
+	{
+		jumping = true;
+	}
+
 	void OnTriggerEnter(Collider other)
 	{
 		if (other.tag == "Sword")
 		{
-			Grab();
+			if (swordObject == null)
+			{
+				swordObject = other.transform.parent.transform.parent.gameObject;
+				
+			}
+			Grab(swordObject);
 		}
+
+		else if (other.tag == "Spike")
+		{
+			Die();
+		}
+		
 	}
 }
