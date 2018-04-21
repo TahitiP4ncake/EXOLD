@@ -50,6 +50,10 @@ public class PlayerController : MonoBehaviour
 	public float throwingSpeed;
 
 	private Vector3 throwingDirection;
+	
+	//ANIMATIONS
+
+	private bool walking;
 
 	void Update()
 	{
