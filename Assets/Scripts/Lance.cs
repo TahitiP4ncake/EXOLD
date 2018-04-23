@@ -19,7 +19,7 @@ public class Lance : MonoBehaviour
 		
 		_lance.GetComponent<Rigidbody>().velocity = lanceur.transform.up * lanceSpeed;
 		
-		print(lanceur.transform.forward);
+		//print(lanceur.transform.forward);
 		
 		fleche.SetActive(false);
 		Invoke("ShowArrow", _timer);

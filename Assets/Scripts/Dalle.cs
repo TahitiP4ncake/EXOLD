@@ -29,7 +29,7 @@ public class Dalle : MonoBehaviour
 			{
 				pushed = true;
 				anim.SetTrigger("Push");
-				print("DALLE PUSHED");
+				//print("DALLE PUSHED");
 				//rend.material.color = Color.white;
 				
 				AudioSource _son = Harmony.SetSource("trap2");
@@ -51,7 +51,7 @@ public class Dalle : MonoBehaviour
 	{
 		anim.SetTrigger("Up");
 		
-		print("DALLE UP");
+		//print("DALLE UP");
 		rend.material.color = _color;
 		pushed = false;
 	}

@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 	//INTERNALS
 	public bool alive;
 	
-	private bool jumping;
+	public bool jumping;
 	private bool armed;
 
 	private float gravity;
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 	
 	//ANIMATIONS
 
-	private bool walking;
+	public bool walking;
 
 	void Update()
 	{
@@ -80,6 +80,7 @@ public class PlayerController : MonoBehaviour
 
 			if (!walking && !jumping)
 			{
+				print("RUN");
 				walking = true;
 				anim.SetTrigger("Run");
 			}
@@ -90,6 +91,7 @@ public class PlayerController : MonoBehaviour
 
 			if (walking)
 			{
+				print("Stop");
 				walking = false;
 				anim.SetTrigger("Stop");
 			}
@@ -155,6 +157,9 @@ public class PlayerController : MonoBehaviour
 		
 		PlaySound("Throw2");
 		PlaySound("Voice1");
+		
+		anim.SetTrigger("Throw");
+		walking = false;
 		
 		swordObject.transform.parent = null;
 		armed = false;
@@ -237,6 +242,9 @@ public class PlayerController : MonoBehaviour
 
 	public void Respawn()
 	{
+		jumping = false;
+		walking = false;
+		
 		foreach (GameObject _arrow in arrows)
 		{
 				Destroy(_arrow);
@@ -291,12 +299,14 @@ public class PlayerController : MonoBehaviour
 				walking = true;
 				anim.SetTrigger("Run");
 				jumping = false;
+				gravity = 0;
 			}
 			else
 			{
 				walking = false;
 				anim.SetTrigger("Stop");
 				jumping = false;
+				gravity = 0;
 			}
 		}
 //		else if (other.collider.tag == "Sword")
@@ -308,7 +318,7 @@ public class PlayerController : MonoBehaviour
 //			Grab(swordObject);
 //		}
 	}
-
+/*
 	private void OnCollisionStay(Collision other)
 	{
 		if (other.collider.tag == "Ground" && jumping)
@@ -319,10 +329,10 @@ public class PlayerController : MonoBehaviour
 			
 		}
 	}
-
+*/
 	private void OnCollisionExit(Collision other)
 	{
-		jumping = true;
+		//jumping = true;
 	}
 
 	void OnTriggerEnter(Collider other)
