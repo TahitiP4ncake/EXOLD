@@ -10,12 +10,13 @@ public class Sword : MonoBehaviour
 
 	public Rigidbody rb;
 
-	public void Throw(Vector3 _direction)
+	public void Throw(Vector3 _position, Vector3 _direction)
 	{
 		rb.isKinematic = false;
 		rb.useGravity = true;
 		col.enabled = true;
 		rb.velocity = _direction;
+		transform.position = _position;
 		transform.LookAt(transform.position + _direction);
 		rb.AddTorque(transform.right * _direction.magnitude, ForceMode.VelocityChange);
 	}

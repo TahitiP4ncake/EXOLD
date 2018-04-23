@@ -72,9 +72,10 @@ public class Corde : MonoBehaviour
 		_player.GetComponentInParent<PlayerController>().Die();
 	}
 	
-	void Trap()
+	public void Trap()
 	{
-		
+		col.enabled = false;	
+
 		AudioSource _son = Harmony.SetSource("arrow2");
 		_son.pitch = Random.Range(.8f, 1.2f);
 		Harmony.Play(_son);

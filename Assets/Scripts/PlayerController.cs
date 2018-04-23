@@ -50,6 +50,8 @@ public class PlayerController : MonoBehaviour
 	public float throwingSpeed;
 
 	private Vector3 throwingDirection;
+
+	public LayerMask cordeMask;
 	
 	//ANIMATIONS
 
@@ -80,7 +82,7 @@ public class PlayerController : MonoBehaviour
 
 			if (!walking && !jumping)
 			{
-				print("RUN");
+				//print("RUN");
 				walking = true;
 				anim.SetTrigger("Run");
 			}
@@ -91,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
 			if (walking)
 			{
-				print("Stop");
+				//print("Stop");
 				walking = false;
 				anim.SetTrigger("Stop");
 			}
@@ -154,6 +156,19 @@ public class PlayerController : MonoBehaviour
 	//throw sword
 	void Throw()
 	{
+		RaycastHit hit;
+
+		
+		if (Physics.Raycast(transform.position+ Vector3.up, transform.position+ Vector3.up + transform.forward, out hit, 4, cordeMask))
+		{
+			
+			if (hit.collider.tag == "Corde")
+			{
+				print("corde");
+				
+				hit.collider.gameObject.GetComponentInParent<Corde>().Trap();
+			}
+		}
 		
 		PlaySound("Throw2");
 		PlaySound("Voice1");
@@ -182,7 +197,7 @@ public class PlayerController : MonoBehaviour
 		}
 		
 		
-		sword.Throw(throwingDirection*throwingSpeed);
+		sword.Throw(transform.position + Vector3.up, throwingDirection*throwingSpeed);
 	}
 
 	//Graw sword

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -169,7 +169,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4149831507385986, guid: 704be903550852742b4ccc5989864985, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -14.7
+      value: -11.78
       objectReference: {fileID: 0}
     - target: {fileID: 4149831507385986, guid: 704be903550852742b4ccc5989864985, type: 2}
       propertyPath: m_LocalPosition.y
@@ -177,7 +177,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4149831507385986, guid: 704be903550852742b4ccc5989864985, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4149831507385986, guid: 704be903550852742b4ccc5989864985, type: 2}
       propertyPath: m_LocalRotation.x
@@ -197,6 +197,31 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4149831507385986, guid: 704be903550852742b4ccc5989864985, type: 2}
       propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114849879575669020, guid: 704be903550852742b4ccc5989864985,
+        type: 2}
+      propertyPath: cordeMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 114695178747808594, guid: 704be903550852742b4ccc5989864985,
+        type: 2}
+      propertyPath: m_fontSize
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114695178747808594, guid: 704be903550852742b4ccc5989864985,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114695178747808594, guid: 704be903550852742b4ccc5989864985,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224448458618815672, guid: 704be903550852742b4ccc5989864985,
+        type: 2}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
