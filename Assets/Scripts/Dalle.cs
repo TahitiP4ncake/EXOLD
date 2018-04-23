@@ -30,7 +30,13 @@ public class Dalle : MonoBehaviour
 				pushed = true;
 				anim.SetTrigger("Push");
 				print("DALLE PUSHED");
-				rend.material.color = Color.white;
+				//rend.material.color = Color.white;
+				
+				AudioSource _son = Harmony.SetSource("trap2");
+				_son.pitch = Random.Range(.8f, 1.2f);
+				Harmony.Play(_son);
+
+				
 				lance.Shoot(cooldown);
 			}
 		}

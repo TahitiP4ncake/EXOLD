@@ -77,10 +77,22 @@ public class PlayerController : MonoBehaviour
 		{
 			Turn();
 			Move();
+
+			if (!walking && !jumping)
+			{
+				walking = true;
+				anim.SetTrigger("Run");
+			}
 		}
 		else
 		{
 			movement = Vector3.Lerp(movement, Vector3.zero, lerpSpeed);
+
+			if (walking)
+			{
+				walking = false;
+				anim.SetTrigger("Stop");
+			}
 		}
 
 		if (jumping)
@@ -95,8 +107,8 @@ public class PlayerController : MonoBehaviour
 
 	void CheckInputs()
 	{
-		x = Input.GetAxis("Gamepad_Left_X") + Input.GetAxis("Horizontal");
-		z = -Input.GetAxis("Gamepad_Left_Y") + Input.GetAxis("Vertical");
+		x = Input.GetAxis("Gamepad_Left_X") + Input.GetAxisRaw("Horizontal");
+		z = -Input.GetAxis("Gamepad_Left_Y") + Input.GetAxisRaw("Vertical");
 
 		if ((Input.GetButtonDown("Gamepad_A") || Input.GetKeyDown(KeyCode.Space)) && !jumping)
 		{
@@ -131,6 +143,8 @@ public class PlayerController : MonoBehaviour
 	void Jump()
 	{
 		jumping = true;
+		
+		anim.SetTrigger("Jump");
 
 		rb.velocity += Vector3.up * jumpForce;
 	}
@@ -139,7 +153,8 @@ public class PlayerController : MonoBehaviour
 	void Throw()
 	{
 		
-		
+		PlaySound("Throw2");
+		PlaySound("Voice1");
 		
 		swordObject.transform.parent = null;
 		armed = false;
@@ -201,6 +216,8 @@ public class PlayerController : MonoBehaviour
 
 	public void Die()
 	{
+		
+		PlaySound("Voice1");
 		
 		alive = false;
 
@@ -265,7 +282,23 @@ public class PlayerController : MonoBehaviour
 		{
 			Die();
 		}
-		
+
+
+		if (jumping)
+		{
+			if (x != 0 || z != 0)
+			{
+				walking = true;
+				anim.SetTrigger("Run");
+				jumping = false;
+			}
+			else
+			{
+				walking = false;
+				anim.SetTrigger("Stop");
+				jumping = false;
+			}
+		}
 //		else if (other.collider.tag == "Sword")
 //		{
 //			if (swordObject == null)
@@ -282,6 +315,8 @@ public class PlayerController : MonoBehaviour
 		{
 			jumping = false;
 			gravity = 0;
+
+			
 		}
 	}
 
@@ -299,6 +334,7 @@ public class PlayerController : MonoBehaviour
 				swordObject = other.transform.parent.transform.parent.gameObject;
 				
 			}
+			PlaySound("Throw3");
 			Grab(swordObject);
 		}
 
@@ -308,12 +344,18 @@ public class PlayerController : MonoBehaviour
 		}
 		else if (other.tag == "Gold")
 		{
-			
 		}
 		else if (other.tag == "Spikes")
 		{
 			Die();
 		}
 		
+	}
+
+	void PlaySound(string _clip)
+	{
+		AudioSource _son = Harmony.SetSource(_clip);
+		_son.pitch = Random.Range(.8f, 1.2f);
+		Harmony.Play(_son);
 	}
 }

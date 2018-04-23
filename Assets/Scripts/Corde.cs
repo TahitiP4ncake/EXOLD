@@ -63,12 +63,22 @@ public class Corde : MonoBehaviour
 
 	void KillPlayer(GameObject _player)
 	{
+		AudioSource _son = Harmony.SetSource("trap1");
+		_son.pitch = Random.Range(.8f, 1.2f);
+		Harmony.Play(_son);
+
+		
 		//trigers trap that kills the player
 		_player.GetComponentInParent<PlayerController>().Die();
 	}
 	
 	void Trap()
 	{
+		
+		AudioSource _son = Harmony.SetSource("arrow2");
+		_son.pitch = Random.Range(.8f, 1.2f);
+		Harmony.Play(_son);
+
 		//triggers trap that may not kill the player
 		FindObjectOfType<GameManager>().CutCorde(this);
 		anim.SetTrigger("Cut");

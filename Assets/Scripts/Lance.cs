@@ -23,6 +23,11 @@ public class Lance : MonoBehaviour
 		
 		fleche.SetActive(false);
 		Invoke("ShowArrow", _timer);
+		
+		AudioSource _son = Harmony.SetSource("arrow1");
+		_son.pitch = Random.Range(.8f, 1.2f);
+		Harmony.Play(_son);
+
 	}
 
 	void ShowArrow()
