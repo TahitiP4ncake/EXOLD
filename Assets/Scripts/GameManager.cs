@@ -26,12 +26,70 @@ public class GameManager : MonoBehaviour
 
 	public TextMeshProUGUI goldText;
 
+	private int goldInRoom;
+	
+	
+	//INTRO
+
+	public TextMeshProUGUI introText;
+
+	public string intro;
+	public string end;
+
+	private bool isIntro = true;
+
 	void Start()
 	{
+		blackScreen.color = Color.black;
+		
+		introText.text = intro;
+
+		player.alive = false;
+		
+		Gold[] _golds = FindObjectsOfType<Gold>();
+
+
+		goldInRoom = _golds.Length + 1;
+
+		maxGoldAmount = goldInRoom;
+		
 		UpdateGoldAmount();
 	}
 
+	void Update()
+	{
+		if (isIntro)
+		{
+			if (Input.GetButtonDown("Gamepad_A"))
+			{
+				isIntro = false;
+				introText.color = new Color(1,1,1,0);
+				StartCoroutine(FadeOut());
+			}
+		}
+	}
+	
 
+	IEnumerator FadeOut()
+	{
+		float _i = 1;
+
+		Color _black = Color.black;
+		while (_i > 0)
+		{
+
+			_black.a = _i;
+
+			blackScreen.color = _black;
+			
+
+			_i -= Time.deltaTime;
+			yield return null;
+		}
+
+		player.alive = true;
+	}
+	
 	public void SetCheckpoint(Vector3 _position)
 	{
 		lastCheckpoint = _position;
@@ -43,27 +101,36 @@ public class GameManager : MonoBehaviour
 	
 
 
-	public void Die()
+	public void Die(bool _rope = false)
 	{
-		StartCoroutine(Fade());
+		StartCoroutine(Fade(_rope));
 	}
-	
-	IEnumerator Fade()
+
+	IEnumerator Fade(bool _instant = false)
 	{
 		float _i = 0;
 		
 		Color _black = new Color(0,0,0,_i);
 
-		while (_i < 1)
+		if (_instant == false)
 		{
-			_i += Time.deltaTime;
-			
-			_black.a = _i;
-			
-			blackScreen.color = _black;
 
-			yield return null;
+			while (_i < 1)
+			{
+				_i += Time.deltaTime;
+
+				_black.a = _i;
+
+				blackScreen.color = _black;
+
+				yield return null;
+			}
 		}
+
+		_black = Color.black;
+		blackScreen.color = _black;
+
+		_i = 1;
 
 		player.transform.position = lastCheckpoint;
 		player.Respawn();

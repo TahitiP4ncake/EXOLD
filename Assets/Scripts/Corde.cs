@@ -69,7 +69,7 @@ public class Corde : MonoBehaviour
 
 		
 		//trigers trap that kills the player
-		_player.GetComponentInParent<PlayerController>().Die();
+		_player.GetComponentInParent<PlayerController>().Die(true);
 	}
 	
 	public void Trap()

@@ -234,7 +234,7 @@ public class PlayerController : MonoBehaviour
 		armed = true;
 	}
 
-	public void Die()
+	public void Die(bool _rope = false)
 	{
 		
 		PlaySound("Voice1");
@@ -246,7 +246,7 @@ public class PlayerController : MonoBehaviour
 
 		
 		
-		manager.Die();
+		manager.Die(true);
 	}
 
 	void UpdateGravity()
