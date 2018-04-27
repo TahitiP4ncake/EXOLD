@@ -10,12 +10,13 @@ public class Sword : MonoBehaviour
 
 	public Rigidbody rb;
 
-	public void Throw(Vector3 _direction)
+	public void Throw(Vector3 _position, Vector3 _direction)
 	{
 		rb.isKinematic = false;
 		rb.useGravity = true;
 		col.enabled = true;
 		rb.velocity = _direction;
+		transform.position = _position;
 		transform.LookAt(transform.position + _direction);
 		rb.AddTorque(transform.right * _direction.magnitude, ForceMode.VelocityChange);
 	}
@@ -37,7 +38,16 @@ public class Sword : MonoBehaviour
 
 	private void OnCollisionEnter(Collision other)
 	{
+		AudioSource _son = Harmony.SetSource("metalClang1");
+		_son.pitch = Random.Range(.8f, 1.2f);
+		_son.volume = .3f;
+		Harmony.Play(_son);
 		
+		AudioSource _son2 = Harmony.SetSource("metalClang2");
+		_son2.pitch = Random.Range(.8f, 1.2f);
+		_son2.volume = .3f;
+		Harmony.Play(_son2);
+
 		
 		if (other.collider.tag == "Wall")
 		{

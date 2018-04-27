@@ -19,10 +19,15 @@ public class Lance : MonoBehaviour
 		
 		_lance.GetComponent<Rigidbody>().velocity = lanceur.transform.up * lanceSpeed;
 		
-		print(lanceur.transform.forward);
+		//print(lanceur.transform.forward);
 		
 		fleche.SetActive(false);
 		Invoke("ShowArrow", _timer);
+		
+		AudioSource _son = Harmony.SetSource("arrow1");
+		_son.pitch = Random.Range(.8f, 1.2f);
+		Harmony.Play(_son);
+
 	}
 
 	void ShowArrow()

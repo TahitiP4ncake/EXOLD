@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 	//INTERNALS
 	public bool alive;
 	
-	private bool jumping;
+	public bool jumping;
 	private bool armed;
 
 	private float gravity;
@@ -51,6 +51,12 @@ public class PlayerController : MonoBehaviour
 
 	private Vector3 throwingDirection;
 
+	public LayerMask cordeMask;
+	
+	//ANIMATIONS
+
+	public bool walking;
+
 	void Update()
 	{
 
@@ -73,10 +79,24 @@ public class PlayerController : MonoBehaviour
 		{
 			Turn();
 			Move();
+
+			if (!walking && !jumping)
+			{
+				//print("RUN");
+				walking = true;
+				anim.SetTrigger("Run");
+			}
 		}
 		else
 		{
 			movement = Vector3.Lerp(movement, Vector3.zero, lerpSpeed);
+
+			if (walking)
+			{
+				//print("Stop");
+				walking = false;
+				anim.SetTrigger("Stop");
+			}
 		}
 
 		if (jumping)
@@ -91,8 +111,8 @@ public class PlayerController : MonoBehaviour
 
 	void CheckInputs()
 	{
-		x = Input.GetAxis("Gamepad_Left_X") + Input.GetAxis("Horizontal");
-		z = -Input.GetAxis("Gamepad_Left_Y") + Input.GetAxis("Vertical");
+		x = Input.GetAxis("Gamepad_Left_X") + Input.GetAxisRaw("Horizontal");
+		z = -Input.GetAxis("Gamepad_Left_Y") + Input.GetAxisRaw("Vertical");
 
 		if ((Input.GetButtonDown("Gamepad_A") || Input.GetKeyDown(KeyCode.Space)) && !jumping)
 		{
@@ -127,6 +147,8 @@ public class PlayerController : MonoBehaviour
 	void Jump()
 	{
 		jumping = true;
+		
+		anim.SetTrigger("Jump");
 
 		rb.velocity += Vector3.up * jumpForce;
 	}
@@ -134,8 +156,25 @@ public class PlayerController : MonoBehaviour
 	//throw sword
 	void Throw()
 	{
+		RaycastHit hit;
+
 		
+		if (Physics.Raycast(transform.position+ Vector3.up, transform.position+ Vector3.up + transform.forward, out hit, 4, cordeMask))
+		{
+			
+			if (hit.collider.tag == "Corde")
+			{
+				print("corde");
+				
+				hit.collider.gameObject.GetComponentInParent<Corde>().Trap();
+			}
+		}
 		
+		PlaySound("Throw2");
+		PlaySound("Voice1");
+		
+		anim.SetTrigger("Throw");
+		walking = false;
 		
 		swordObject.transform.parent = null;
 		armed = false;
@@ -158,7 +197,7 @@ public class PlayerController : MonoBehaviour
 		}
 		
 		
-		sword.Throw(throwingDirection*throwingSpeed);
+		sword.Throw(transform.position + Vector3.up, throwingDirection*throwingSpeed);
 	}
 
 	//Graw sword
@@ -195,8 +234,10 @@ public class PlayerController : MonoBehaviour
 		armed = true;
 	}
 
-	public void Die()
+	public void Die(bool _rope = false)
 	{
+		
+		PlaySound("Voice1");
 		
 		alive = false;
 
@@ -205,7 +246,7 @@ public class PlayerController : MonoBehaviour
 
 		
 		
-		manager.Die();
+		manager.Die(true);
 	}
 
 	void UpdateGravity()
@@ -216,6 +257,9 @@ public class PlayerController : MonoBehaviour
 
 	public void Respawn()
 	{
+		jumping = false;
+		walking = false;
+		
 		foreach (GameObject _arrow in arrows)
 		{
 				Destroy(_arrow);
@@ -261,7 +305,25 @@ public class PlayerController : MonoBehaviour
 		{
 			Die();
 		}
-		
+
+
+		if (jumping)
+		{
+			if (x != 0 || z != 0)
+			{
+				walking = true;
+				anim.SetTrigger("Run");
+				jumping = false;
+				gravity = 0;
+			}
+			else
+			{
+				walking = false;
+				anim.SetTrigger("Stop");
+				jumping = false;
+				gravity = 0;
+			}
+		}
 //		else if (other.collider.tag == "Sword")
 //		{
 //			if (swordObject == null)
@@ -271,19 +333,21 @@ public class PlayerController : MonoBehaviour
 //			Grab(swordObject);
 //		}
 	}
-
+/*
 	private void OnCollisionStay(Collision other)
 	{
 		if (other.collider.tag == "Ground" && jumping)
 		{
 			jumping = false;
 			gravity = 0;
+
+			
 		}
 	}
-
+*/
 	private void OnCollisionExit(Collision other)
 	{
-		jumping = true;
+		//jumping = true;
 	}
 
 	void OnTriggerEnter(Collider other)
@@ -295,6 +359,7 @@ public class PlayerController : MonoBehaviour
 				swordObject = other.transform.parent.transform.parent.gameObject;
 				
 			}
+			PlaySound("Throw3");
 			Grab(swordObject);
 		}
 
@@ -304,12 +369,18 @@ public class PlayerController : MonoBehaviour
 		}
 		else if (other.tag == "Gold")
 		{
-			
 		}
 		else if (other.tag == "Spikes")
 		{
 			Die();
 		}
 		
+	}
+
+	void PlaySound(string _clip)
+	{
+		AudioSource _son = Harmony.SetSource(_clip);
+		_son.pitch = Random.Range(.8f, 1.2f);
+		Harmony.Play(_son);
 	}
 }
